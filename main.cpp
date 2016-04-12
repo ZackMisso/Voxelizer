@@ -91,16 +91,18 @@ void displayMapView() {
   glVertex2f(1.0f,1.0);
   glVertex2f(-1.0f,1.0);
 
-  programData->getCurrentVoxel()->drawMap();
-
   glEnd();
+
+  programData->getCurrentVoxel()->drawMap();
 }
 
 void reshape(int w,int h) {
 	// reshapes the view after the window changes shape
-  if(programData->getMapView())
-    glViewport(0,0,w,h);
-	//glMatrixMode(GL_PROJECTION);
+  //if(programData->getMapView())
+  glViewport(0,0,w,h);
+  programData->setWinW(w);
+  programData->setWinH(h);
+  //glMatrixMode(GL_PROJECTION);
 	//glLoadIdentity();
 	//gluPerspective(65.0,(float)h/w,.1,100);
 	//glMatrixMode(GL_MODELVIEW);
@@ -118,6 +120,8 @@ void keyboard(unsigned char key,int x,int y) {
     transitionToVoxelizedView();
   if(key == 'm')
     transitionToMapView();
+  if(key == 'g')
+    programData->getCurrentVoxel()->bake();
   glutPostRedisplay();
 }
 
@@ -126,12 +130,19 @@ void mouseMove(int x,int y) {
 }
 
 void mouseClick(int button,int state,int x,int y) {
+  //cout << "MOUSE CLICKED" << endl;
+  //if(button == GLUT_LEFT_BUTTON)
   if(programData->getMapView()) {
-    int mapX;
-    int mapY;
-
-    // get stuff
+    if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+      int mapX = (int)(((float)x) / ((float)programData->getWinW()) * ((float)MAPDIM));
+      int mapY = MAPDIM - 1 - (int)(((float)y) / ((float)programData->getWinH()) * ((float)MAPDIM));
+      programData->getCurrentVoxel()->flipMapVal(mapY,mapX);
+      programData->getCurrentVoxel()->flipMapVal(MAPDIM-1-mapY,mapX);
+      programData->getCurrentVoxel()->flipMapVal(mapY,MAPDIM-1-mapX);
+      programData->getCurrentVoxel()->flipMapVal(MAPDIM-1-mapY,MAPDIM-1-mapX);
+    }
   }
+  glutPostRedisplay();
 }
 
 void transitionToObjectView() {

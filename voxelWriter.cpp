@@ -10,7 +10,7 @@ void VoxelWriter::writeVoxel(Voxel* voxel,string file) {
 	// to be implemented
 }
 
-void VoxelWriter::getInstance() {
+VoxelWriter* VoxelWriter::getInstance() {
 	return instance;
 }
 
@@ -23,4 +23,3 @@ void VoxelWriter::destroy() {
 	if(instance)
 		delete instance;
 }
-
