@@ -1,0 +1,4 @@
+*.o
+Voxelizer
+images
+meshes
