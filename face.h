@@ -4,6 +4,7 @@
 #include "vertex.h"
 #include "array.h"
 #include "vec3.h"
+#include "ray.h"
 
 class Face{
 private:
@@ -13,6 +14,7 @@ public:
 	Face(int *vals);
 	void calculateNorm(Array<Vertex*> *vs);
 	void draw(Array<Vertex*>* verts);
+	bool collides(Ray* ray);
 };
 
 #endif

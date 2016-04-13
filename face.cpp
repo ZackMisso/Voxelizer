@@ -13,3 +13,9 @@ void Face::calculateNorm(Array<Vertex*>* vs) {
 void Face::draw(Array<Vertex*>* verts) {
   // to be implemented
 }
+
+bool Face::collides(Ray* ray) {
+	// to be implemented
+	return false;
+}
+
