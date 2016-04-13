@@ -11,7 +11,7 @@ ProgramData::~ProgramData() {
   delete currentVoxel;
   delete currentTrimesh;
   delete currentVoxelMesh;
-  delete trimeshLoader;
+  delete loader;
 }
 
 void ProgramData::falsifyViews() {

@@ -28,7 +28,7 @@ void TriMesh::addVertex(float* vals) {
 }
 
 void TriMesh::addFace(int *vals) {
-  faces->add(new Face(vals))
+  faces->add(new Face(vals));
 }
 
 void TriMesh::calculateBbox() {

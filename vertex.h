@@ -1,6 +1,9 @@
 #ifndef __VERTEX_H__
 #define __VERTEX_H__
 
+#include "globalInclude.h"
+#include "vec3.h"
+
 class Vertex {
 private:
   Vec3 pos;

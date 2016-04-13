@@ -13,6 +13,8 @@ private:
   TriMesh* currentTrimesh;
   VoxelMesh* currentVoxelMesh;
   TriMeshLoader* loader;
+  int winH;
+  int winW;
   bool objectView;
   bool voxelView;
   bool customView;
@@ -27,6 +29,8 @@ public:
   TriMesh* getCurrentTriMesh();
   VoxelMesh* getCurrentVoxelMesh();
   TriMeshLoader* getLoader();
+  int getWinH();
+  int getWinW();
   bool getObjectView();
   bool getVoxelView();
   bool getCustomView();
@@ -37,6 +41,8 @@ public:
   void setCurrentTriMesh(TriMesh* param);
   void setCurrentVoxelMesh(VoxelMesh* param);
   void setLoader(TriMeshLoader* param);
+  void setWinH(int param);
+  void setWinW(int param);
   void setObjectView(bool param);
   void setVoxelView(bool param);
   void setCustomView(bool param);

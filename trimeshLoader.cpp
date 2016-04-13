@@ -10,7 +10,7 @@ TokenPair* TriMeshLoader::tokenMatch(char *srchtok){
     return ptokp;
   }
 
-void TriMeshLoader::loadOBJ(const char* objfile, Mesh* pmesh){
+void TriMeshLoader::loadOBJ(const char* objfile,TriMesh* pmesh){
   fstream ifs;
   char line[LINE_SIZE];
   //cout << "READIING" << endl;
@@ -54,14 +54,14 @@ int TriMeshLoader::readInts(char *tok,int *buf,int bufsz){
 
 void TriMeshLoader::processSkip(char*tok){}
 
-void TriMeshLoader::processVertex(char* tok, Mesh *pmesh){
+void TriMeshLoader::processVertex(char* tok,TriMesh *pmesh){
   //cout << "PROCESSING VERTEX" << endl;
   float values[3];
   int cnt=readFloats(tok,values,3);
   if(cnt>=3) pmesh->addVertex(values);
 }
 
-void TriMeshLoader::processFace(char *tok,Mesh *pmesh){
+void TriMeshLoader::processFace(char *tok,TriMesh *pmesh){
   //cout << "PROCESSING FACE" << endl;
   int ids[256];
   int cnt=readInts(tok,ids,256);

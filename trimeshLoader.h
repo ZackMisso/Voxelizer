@@ -24,7 +24,7 @@ struct TokenPair{
 	}
 };
 
-class TriMeshLoader{
+class TriMeshLoader {
 public:
   TriMeshLoader();
 	//static TokenPair tokenMap[];
@@ -33,10 +33,10 @@ public:
 	TokenPair *tokenMatch(char *srchtok);
 	void loadOBJ(const char* objfile, TriMesh* pmesh);
 	int readFloats(char *tok,float *buf,int bufsz);
-	int readInts(char *tok,int *buf,int bufsz){;
+	int readInts(char *tok,int *buf,int bufsz);
 	void processSkip(char*tok);
-	void processVertex(char* tok, Mesh *pmesh);
-	void processFace(char *tok,Mesh *pmesh){;
+	void processVertex(char* tok,TriMesh *pmesh);
+	void processFace(char *tok,TriMesh *pmesh);
 
 	TokenPair EMPTY_PAIR={"",T_NONE};
 
