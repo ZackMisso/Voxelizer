@@ -35,7 +35,7 @@ void Voxel::drawMap() {
   glEnd();
 }
 
-void Voxel::drawVoxel() {
+void Voxel::drawVoxel(Vec3 pos,float dim) {
   // to be implemented
 }
 
@@ -80,6 +80,37 @@ void Voxel::drawSquare() {
   glEnd();
 }
 
-void Voxel::drawCube() {
-  // to be implemented
+void Voxel::drawCube(Vec3 pos,float dim) {
+	glBegin(GL_QUADS);
+	glVertex3f(pos.x,pos.y,pos.z);
+	glVertex3f(pos.x+d,pos.y,pos.z);
+	glVertex3f(pos.x+d,pos.y-d,pos.z);
+	glVertex3f(pos.x,pos.y-d,pos.z);
+
+	glVertex3f(pos.x,pos.y,pos.z);
+	glVertex3f(pos.x,pos.y,pos.z+d);
+	glVertex3f(pos.x+d,pos.y,pos.z+d);
+	glVertex3f(pos.x+d,pos.y,pos.z);
+
+	glVertex3f(pos.x,pos.y,pos.z);
+	glVertex3f(pos.x,pos.y-d,pos.z);
+	glVertex3f(pos.x,pos.y-d,pos.z+d);
+	glVertex3f(pos.x,pos.y,pos.z+d);
+
+	glVertex3f(pos.x+d,pos.y-d,pos.z+d);
+	glVertex3f(pos.x,pos.y-d,pos.z+d);
+	glVertex3f(pos.x,pos.y,pos.z+d);
+	glVertex3f(pos.x+d,pos.y,pos.z+d);
+
+	glVertex3f(pos.x+d,pos.y-d,pos.z+d);
+	glVertex3f(pos.x,pos.y-d,pos.z+d);
+	glVertex3f(pos.x,pos.y-d,pos.z);
+	glVertex3f(pos.x+d,pos.y-d,pos.z);
+
+	glVertex3f(pos.x+d,pos.y-d,pos.z+d);
+	glVertex3f(pos.x+d,pos.y,pos.z+d);
+	glVertex3f(pos.x+d,pos.y,pos.z);
+	glVertex3f(pos.x+d,pos.y-d,pos.z);
+	glEnd();
 }
+
