@@ -19,6 +19,10 @@ float Bbox::longestDim() {
   return longest;
 }
 
+float Bbox::volume() {
+  return dim.x * dim.y * dim.z;
+}
+
 Vec3 getPos() { return pos; }
 Vec3 getDim() { return dim; }
 

@@ -11,6 +11,7 @@ public:
   Bbox();
   Bbox(Vec3 p,Vec3 d);
   float longestDim();
+  float volume();
   // getter methods
   Vec3 getPos();
   Vec3 getDim();
