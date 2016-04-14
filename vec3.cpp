@@ -11,3 +11,21 @@ Vec3::Vec3(float xpos,float ypos,float zpos) {
   y = ypos;
   z = zpos;
 }
+
+Vec3 Vec3::operator+(const Vec3& other) const {
+	return Vec3(x+other.x,y+other.y,z+other.z);
+}
+
+Vec3 Vec3::operator-(const Vec3& other) const {
+	return Vec3(x-other.x,y-other.y,z-other.z);
+}
+
+Vec3 Vec3::operator^(const Vec3& other) const {
+	// to be implemented
+	return Vec3();
+}
+
+float Vec3::operator*(const Vec3& other) const {
+	return x*other.x + y*other.y + z*other.z;
+}
+

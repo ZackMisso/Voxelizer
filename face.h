@@ -14,7 +14,7 @@ public:
 	Face(int *vals);
 	void calculateNorm(Array<Vertex*> *vs);
 	void draw(Array<Vertex*>* verts);
-	bool collides(Ray* ray);
+	bool collides(Ray* ray,Array<Vertex*>* verts);
 };
 
 #endif
