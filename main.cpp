@@ -1,14 +1,16 @@
 #include "programData.h"
+#include "control.h"
 #include <GLFW/glfw3.h>
 
 ProgramData* programData;
+Control* control;
 
 // openGL methods
 void display();
 void reshape(int w,int h);
 void keyboard(GLFWwindow* window,int key,int scancode,int action,int mods);
-void mouseMove(int x,int y);
-void mouseClick(int button,int state,int x,int y);
+void mouseMove(GLFWwindow* window,double x,double y);
+void mouseClick(GLFWwindow* window,int button,int action,int mods);
 void error(int error, const char* description);
 // display methods
 void displayObjectView();
@@ -24,19 +26,11 @@ void transitionToVoxelizedView();
 void transitionToMapView();
 
 int main(int argc,char** argv) {
+  // initialize needed data
   programData = new ProgramData();
   programData->setMapView(true);
-  cout << "I AM DOING A THING" << endl;
-  //glutInit(&argc,argv);
-	//glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	//glutInitWindowSize(1000,1000);
-	//glutCreateWindow("Zack Misso - Voxelizer");
-	//glutDisplayFunc(display);
-	// to be implemented
-	//glutReshapeFunc(reshape);
-	//glutKeyboardFunc(keyboard);
-	//glutMouseFunc(mouseClick);
-	//glutMotionFunc(mouseMove);
+  control = new Control();
+  // initialize glfw
   if(!glfwInit())
     exit(EXIT_FAILURE);
   GLFWwindow* window = glfwCreateWindow(1000,1000,"Zack Misso - Voxelizer",NULL,NULL);
@@ -49,10 +43,13 @@ int main(int argc,char** argv) {
   glfwSetErrorCallback(error);
   glfwMakeContextCurrent(window);
   glfwSetKeyCallback(window,keyboard);
+  glfwSetCursorPosCallback(window,mouseMove);
+  glfwSetMouseButtonCallback(window,mouseClick);
   glfwGetFramebufferSize(window, &width, &height);
   glViewport(0,0,width,height);
   glfwSwapInterval(1);
   transitionToMapView();
+  // main loop
   while (!glfwWindowShouldClose(window))
   {
     // Main Loop
@@ -76,7 +73,6 @@ void display() {
     displayVoxelizedView();
   if(programData->getMapView())
     displayMapView();
-  //glutSwapBuffers();
 }
 
 void displayObjectView() {
@@ -129,46 +125,47 @@ void reshape(int w,int h) {
 	//glLoadIdentity();
 	//gluPerspective(65.0,(float)h/w,.1,100);
 	//glMatrixMode(GL_MODELVIEW);
-	//glutPostRedisplay();
 }
 
 void keyboard(GLFWwindow* window,int key,int scancode,int action,int mods) {
   if(key==GLFW_KEY_ESCAPE && action==GLFW_PRESS)
     glfwSetWindowShouldClose(window,GL_TRUE);
-  // TODO :: Fix the chars
-  if(key == 'o')
+  if(key == GLFW_KEY_O && action == GLFW_PRESS)
     transitionToObjectView();
-  if(key == 'v')
+  if(key == GLFW_KEY_V && action == GLFW_PRESS)
     transitionToVoxelView();
-  if(key == 'c')
+  if(key == GLFW_KEY_C && action == GLFW_PRESS)
     transitionToCustomView();
-  if(key == 'd')
+  if(key == GLFW_KEY_D && action == GLFW_PRESS)
     transitionToVoxelizedView();
-  if(key == 'm')
+  if(key == GLFW_KEY_M && action == GLFW_PRESS)
     transitionToMapView();
-  if(key == 'g')
+  if(key == GLFW_KEY_G && action == GLFW_PRESS)
     programData->getCurrentVoxel()->bake();
-  //glutPostRedisplay();
 }
 
-void mouseMove(int x,int y) {
-  // to be implemented
+void mouseMove(GLFWwindow* window,double x,double y) {
+  control->updateMousePosition(x,y);
 }
 
-void mouseClick(int button,int state,int x,int y) {
-  //cout << "MOUSE CLICKED" << endl;
-  //if(button == GLUT_LEFT_BUTTON)
+void mouseClick(GLFWwindow* window,int button,int action,int mods) {
+  // Control Updates
+  if(button == GLFW_MOUSE_BUTTON_LEFT && GLFW_PRESS)
+    control->updateClicking(true);
+  if(button == GLFW_MOUSE_BUTTON_LEFT && GLFW_RELEASE)
+    control->updateClicking(false);
+  // Cases Per View
   if(programData->getMapView()) {
-    //if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-      int mapX = (int)(((float)x) / ((float)programData->getWinW()) * ((float)MAPDIM));
-      int mapY = MAPDIM - 1 - (int)(((float)y) / ((float)programData->getWinH()) * ((float)MAPDIM));
+    if(control->getClicking()) {
+      //cout << "Xpos: " << control->getMouseX() << " Ypos: " << control->getMouseY() << endl;
+      int mapX = (int)(control->getMouseX() / ((double)programData->getWinW()) * ((double)MAPDIM));
+      int mapY = (int)(control->getMouseY() / ((double)programData->getWinH()) * ((double)MAPDIM));
       programData->getCurrentVoxel()->flipMapVal(mapY,mapX);
       programData->getCurrentVoxel()->flipMapVal(MAPDIM-1-mapY,mapX);
       programData->getCurrentVoxel()->flipMapVal(mapY,MAPDIM-1-mapX);
       programData->getCurrentVoxel()->flipMapVal(MAPDIM-1-mapY,MAPDIM-1-mapX);
-    //}
+    }
   }
-  //glutPostRedisplay();
 }
 
 void error(int error, const char* description) {
