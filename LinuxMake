@@ -2,7 +2,8 @@ CC=clang++
 #CC=g++
 CFLAGS+= -std=c++11 #-g -O0 -Wall -pedantic -I./ -I./include
 
-GLUT2 =  -framework OpenGL -framework GLUT -framework IOKit -framework CoreVideo -lglfw3
+STRINGFIX = -lXext -lX11 -L/usr/lib/nvidia-340-updates
+GLUT2 = -lGL -lGLU -lglfw3 -lpthread
 LIBS = $(STRINGFIX) $(GLUT2) #$(GLUI2)
 
 PROD= Voxelizer

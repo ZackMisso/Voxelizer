@@ -1,5 +1,5 @@
 #include "voxelmesh.h"
-#include <GL/glut.h>
+#include <GLFW/glfw3.h>
 
 VoxelMesh::VoxelMesh() {
   pos = Vec3();
@@ -35,7 +35,7 @@ void VoxelMesh::drawMesh() {
 }
 
 void VoxelMesh::drawCustomMesh(Voxel* voxel) {
-  for(int i=0;i<VOXDIM,i++)
+  for(int i=0;i<VOXDIM;i++)
 		for(int j=0;j<VOXDIM;j++)
 			for(int k=0;k<VOXDIM;k++)
 				if(mesh[i][j][k]) {
@@ -45,7 +45,7 @@ void VoxelMesh::drawCustomMesh(Voxel* voxel) {
 				}
 }
 
-void VoxelMesh::drawCube(Vec3 pos,float dim) {
+void VoxelMesh::drawCube(Vec3 pos,float d) {
 	glBegin(GL_QUADS);
 	glVertex3f(pos.x,pos.y,pos.z);
 	glVertex3f(pos.x+d,pos.y,pos.z);

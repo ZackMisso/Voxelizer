@@ -15,7 +15,7 @@ void VoxelWriter::writeVoxel(Voxel* voxel,string file) {
 	stream.open(file);
 	// to be implemented
 	// stream << blah;
-	stream.clost();
+	stream.close();
 }
 
 VoxelWriter* VoxelWriter::getInstance() {

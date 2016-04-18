@@ -1,14 +1,15 @@
 #include "programData.h"
-#include <GL/glut.h>
+#include <GLFW/glfw3.h>
 
 ProgramData* programData;
 
 // openGL methods
 void display();
 void reshape(int w,int h);
-void keyboard(unsigned char key,int x,int y);
+void keyboard(GLFWwindow* window,int key,int scancode,int action,int mods);
 void mouseMove(int x,int y);
 void mouseClick(int button,int state,int x,int y);
+void error(int error, const char* description);
 // display methods
 void displayObjectView();
 void displayVoxelView();
@@ -26,19 +27,41 @@ int main(int argc,char** argv) {
   programData = new ProgramData();
   programData->setMapView(true);
   cout << "I AM DOING A THING" << endl;
-  glutInit(&argc,argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize(1000,1000);
-	glutCreateWindow("Zack Misso - Voxelizer");
-	glutDisplayFunc(display);
+  //glutInit(&argc,argv);
+	//glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+	//glutInitWindowSize(1000,1000);
+	//glutCreateWindow("Zack Misso - Voxelizer");
+	//glutDisplayFunc(display);
 	// to be implemented
-	glutReshapeFunc(reshape);
-	glutKeyboardFunc(keyboard);
-	glutMouseFunc(mouseClick);
-	glutMotionFunc(mouseMove);
+	//glutReshapeFunc(reshape);
+	//glutKeyboardFunc(keyboard);
+	//glutMouseFunc(mouseClick);
+	//glutMotionFunc(mouseMove);
+  if(!glfwInit())
+    exit(EXIT_FAILURE);
+  GLFWwindow* window = glfwCreateWindow(1000,1000,"Zack Misso - Voxelizer",NULL,NULL);
+  if (!window) {
+    glfwTerminate();
+    exit(EXIT_FAILURE);
+  }
+  int width;
+  int height;
+  glfwSetErrorCallback(error);
+  glfwMakeContextCurrent(window);
+  glfwSetKeyCallback(window,keyboard);
+  glfwGetFramebufferSize(window, &width, &height);
+  glViewport(0,0,width,height);
+  glfwSwapInterval(1);
   transitionToMapView();
-  glutMainLoop();
-
+  while (!glfwWindowShouldClose(window))
+  {
+    // Main Loop
+    display();
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+  }
+  glfwDestroyWindow(window);
+  glfwTerminate();
   return 0;
 }
 
@@ -53,7 +76,7 @@ void display() {
     displayVoxelizedView();
   if(programData->getMapView())
     displayMapView();
-  glutSwapBuffers();
+  //glutSwapBuffers();
 }
 
 void displayObjectView() {
@@ -106,10 +129,13 @@ void reshape(int w,int h) {
 	//glLoadIdentity();
 	//gluPerspective(65.0,(float)h/w,.1,100);
 	//glMatrixMode(GL_MODELVIEW);
-	glutPostRedisplay();
+	//glutPostRedisplay();
 }
 
-void keyboard(unsigned char key,int x,int y) {
+void keyboard(GLFWwindow* window,int key,int scancode,int action,int mods) {
+  if(key==GLFW_KEY_ESCAPE && action==GLFW_PRESS)
+    glfwSetWindowShouldClose(window,GL_TRUE);
+  // TODO :: Fix the chars
   if(key == 'o')
     transitionToObjectView();
   if(key == 'v')
@@ -122,7 +148,7 @@ void keyboard(unsigned char key,int x,int y) {
     transitionToMapView();
   if(key == 'g')
     programData->getCurrentVoxel()->bake();
-  glutPostRedisplay();
+  //glutPostRedisplay();
 }
 
 void mouseMove(int x,int y) {
@@ -133,16 +159,20 @@ void mouseClick(int button,int state,int x,int y) {
   //cout << "MOUSE CLICKED" << endl;
   //if(button == GLUT_LEFT_BUTTON)
   if(programData->getMapView()) {
-    if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+    //if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
       int mapX = (int)(((float)x) / ((float)programData->getWinW()) * ((float)MAPDIM));
       int mapY = MAPDIM - 1 - (int)(((float)y) / ((float)programData->getWinH()) * ((float)MAPDIM));
       programData->getCurrentVoxel()->flipMapVal(mapY,mapX);
       programData->getCurrentVoxel()->flipMapVal(MAPDIM-1-mapY,mapX);
       programData->getCurrentVoxel()->flipMapVal(mapY,MAPDIM-1-mapX);
       programData->getCurrentVoxel()->flipMapVal(MAPDIM-1-mapY,MAPDIM-1-mapX);
-    }
+    //}
   }
-  glutPostRedisplay();
+  //glutPostRedisplay();
+}
+
+void error(int error, const char* description) {
+  // to be implemented
 }
 
 void transitionToObjectView() {

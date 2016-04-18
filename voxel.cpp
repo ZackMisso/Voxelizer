@@ -1,5 +1,5 @@
 #include "voxel.h"
-#include <GL/glut.h>
+#include <GLFW/glfw3.h>
 #include <iostream>
 
 using namespace std;
@@ -80,7 +80,7 @@ void Voxel::drawSquare() {
   glEnd();
 }
 
-void Voxel::drawCube(Vec3 pos,float dim) {
+void Voxel::drawCube(Vec3 pos,float d) {
 	glBegin(GL_QUADS);
 	glVertex3f(pos.x,pos.y,pos.z);
 	glVertex3f(pos.x+d,pos.y,pos.z);
@@ -113,4 +113,3 @@ void Voxel::drawCube(Vec3 pos,float dim) {
 	glVertex3f(pos.x+d,pos.y-d,pos.z);
 	glEnd();
 }
-
