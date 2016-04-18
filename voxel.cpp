@@ -113,3 +113,113 @@ void Voxel::drawCube(Vec3 pos,float d) {
 	glVertex3f(pos.x+d,pos.y-d,pos.z);
 	glEnd();
 }
+
+void Voxel::drawNormalCube(bool wireframe) {
+  if(wireframe) {
+    glBegin(GL_LINES);
+    glVertex3f(-1.0,-1.0,-1.0);
+    glVertex3f(-1.0,1.0,-1.0);
+
+    glVertex3f(-1.0,1.0,-1.0);
+    glVertex3f(1.0,1.0,-1.0);
+
+    glVertex3f(1.0,1.0,-1.0);
+    glVertex3f(1.0,-1.0,-1.0);
+
+    glVertex3f(1.0,-1.0,-1.0);
+    glVertex3f(-1.0,-1.0,-1.0);
+
+    glVertex3f(-1.0,-1.0,-1.0);
+    glVertex3f(1.0,-1.0,-1.0);
+
+    glVertex3f(1.0,-1.0,-1.0);
+    glVertex3f(1.0,-1.0,1.0);
+
+    glVertex3f(1.0,-1.0,1.0);
+    glVertex3f(-1.0,-1.0,1.0);
+
+    glVertex3f(-1.0,-1.0,1.0);
+    glVertex3f(-1.0,-1.0,-1.0);
+
+    glVertex3f(-1.0,-1.0,-1.0);
+    glVertex3f(-1.0,1.0,-1.0);
+
+    glVertex3f(-1.0,1.0,-1.0);
+    glVertex3f(-1.0,1.0,1.0);
+
+    glVertex3f(-1.0,1.0,1.0);
+    glVertex3f(-1.0,-1.0,1.0);
+
+    glVertex3f(-1.0,-1.0,1.0);
+    glVertex3f(-1.0,-1.0,-1.0);
+
+    glVertex3f(1.0,1.0,1.0);
+    glVertex3f(1.0,-1.0,1.0);
+
+    glVertex3f(1.0,-1.0,1.0);
+    glVertex3f(-1.0,-1.0,1.0);
+
+    glVertex3f(-1.0,-1.0,1.0);
+    glVertex3f(-1.0,1.0,1.0);
+
+    glVertex3f(-1.0,1.0,1.0);
+    glVertex3f(1.0,1.0,1.0);
+
+    glVertex3f(1.0,1.0,1.0);
+    glVertex3f(-1.0,1.0,1.0);
+
+    glVertex3f(-1.0,1.0,1.0);
+    glVertex3f(-1.0,1.0,-1.0);
+
+    glVertex3f(-1.0,1.0,-1.0);
+    glVertex3f(1.0,1.0,-1.0);
+
+    glVertex3f(1.0,1.0,-1.0);
+    glVertex3f(1.0,1.0,1.0);
+
+    glVertex3f(1.0,1.0,1.0);
+    glVertex3f(1.0,-1.0,1.0);
+
+    glVertex3f(1.0,-1.0,1.0);
+    glVertex3f(1.0,-1.0,-1.0);
+
+    glVertex3f(1.0,-1.0,-1.0);
+    glVertex3f(1.0,1.0,-1.0);
+
+    glVertex3f(1.0,1.0,-1.0);
+    glVertex3f(1.0,1.0,1.0);
+  } else {
+    glBegin(GL_QUADS);
+
+    glVertex3f(-1.0,-1.0,-1.0);
+    glVertex3f(-1.0,1.0,-1.0);
+    glVertex3f(1.0,1.0,-1.0);
+    glVertex3f(1.0,-1.0,-1.0);
+
+    glVertex3f(-1.0,-1.0,-1.0);
+    glVertex3f(1.0,-1.0,-1.0);
+    glVertex3f(1.0,-1.0,1.0);
+    glVertex3f(-1.0,-1.0,1.0);
+
+    glVertex3f(-1.0,-1.0,-1.0);
+    glVertex3f(-1.0,1.0,-1.0);
+    glVertex3f(-1.0,1.0,1.0);
+    glVertex3f(-1.0,-1.0,1.0);
+
+    glVertex3f(1.0,1.0,1.0);
+    glVertex3f(1.0,-1.0,1.0);
+    glVertex3f(-1.0,-1.0,1.0);
+    glVertex3f(-1.0,1.0,1.0);
+
+    glVertex3f(1.0,1.0,1.0);
+    glVertex3f(-1.0,1.0,1.0);
+    glVertex3f(-1.0,1.0,-1.0);
+    glVertex3f(1.0,1.0,-1.0);
+
+    glVertex3f(1.0,1.0,1.0);
+    glVertex3f(1.0,-1.0,1.0);
+    glVertex3f(1.0,-1.0,-1.0);
+    glVertex3f(1.0,1.0,-1.0);
+  }
+	glEnd();
+}

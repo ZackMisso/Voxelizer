@@ -7,6 +7,7 @@ ProgramData::ProgramData() {
   loader = new TriMeshLoader();
   winH = 1000;
   winW = 1000;
+  wireframe = false;
 }
 
 ProgramData::~ProgramData() {
@@ -35,6 +36,7 @@ bool ProgramData::getVoxelView() { return voxelView; }
 bool ProgramData::getCustomView() { return customView; }
 bool ProgramData::getVoxelizedView() { return voxelizedView; }
 bool ProgramData::getMapView() { return mapView; }
+bool ProgramData::getWireframe() { return wireframe; }
 
 void ProgramData::setCurrentVoxel(Voxel* param) { currentVoxel = param; }
 void ProgramData::setCurrentTriMesh(TriMesh* param) { currentTrimesh = param; }
@@ -47,3 +49,4 @@ void ProgramData::setVoxelView(bool param) { voxelView = param; }
 void ProgramData::setCustomView(bool param) { customView = param; }
 void ProgramData::setVoxelizedView(bool param) { voxelizedView = param; }
 void ProgramData::setMapView(bool param) { mapView = param; }
+void ProgramData::setWireframe(bool param) { wireframe = param; }

@@ -20,6 +20,7 @@ private:
   bool customView;
   bool voxelizedView;
   bool mapView;
+  bool wireframe;
 public:
   ProgramData();
   ~ProgramData();
@@ -36,6 +37,7 @@ public:
   bool getCustomView();
   bool getVoxelizedView();
   bool getMapView();
+  bool getWireframe();
   // setter methods
   void setCurrentVoxel(Voxel* param);
   void setCurrentTriMesh(TriMesh* param);
@@ -48,6 +50,7 @@ public:
   void setCustomView(bool param);
   void setVoxelizedView(bool param);
   void setMapView(bool param);
+  void setWireframe(bool param);
 };
 
 #endif

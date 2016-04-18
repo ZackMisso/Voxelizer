@@ -15,6 +15,7 @@ public:
   void setMapVal(int y,int x,bool val);
   void flipMapVal(int y,int x);
   void drawMap();
+  void drawNormalCube(bool wireframe);
   void bake();
   void drawVoxel(Vec3 pos,float dim);
   void resetMap();

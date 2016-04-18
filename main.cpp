@@ -5,6 +5,9 @@
 ProgramData* programData;
 Control* control;
 
+// debug code
+double dt;
+
 // openGL methods
 void display();
 void reshape(int w,int h);
@@ -49,9 +52,12 @@ int main(int argc,char** argv) {
   glViewport(0,0,width,height);
   glfwSwapInterval(1);
   transitionToMapView();
+  programData->setWinW(width);
+  programData->setWinH(height);
   // main loop
   while (!glfwWindowShouldClose(window))
   {
+    dt+=.1;
     // Main Loop
     display();
     glfwSwapBuffers(window);
@@ -80,7 +86,27 @@ void displayObjectView() {
 }
 
 void displayVoxelView() {
+  //glMatrixMode(GL_PROJECTION);
+  //glLoadIdentity();
+  //gluPerspective(65.0,(float)programData->getWinH()/programData->getWinW(),.1,100);
+  //glFrustum(-2.0,2.0,-2.0,2.0,-20.0,20.0);
+  //glMatrixMode(GL_MODELVIEW);
+  glClearColor(0.0f,0.0f,0.0f,1.0f);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  //glOrtho(-1.0f,1.0f,-2.0f,2.0f,2.0f,-2.0f);
+  //gluPerspective(65.0,(float)programData->getWinH()/programData->getWinW(),.1,100);
+  glFrustum(-2.0,2.0,-2.0,2.0,-1.0,20.0);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
   // to be implemented
+  // test by drawing a cube
+  glRotatef(dt,0.0,1.0,0.0);
+  glRotatef(30,1.0,0.0,0.0);
+  glScalef(0.4f,0.4f,0.4f);
+  glTranslatef(0.0f,-0.1f,0.0f);
+  programData->getCurrentVoxel()->drawNormalCube(programData->getWireframe());
 }
 
 void displayCustomView() {
@@ -92,6 +118,8 @@ void displayVoxelizedView() {
 }
 
 void displayMapView() {
+  glLoadIdentity();
+  glMatrixMode(GL_MODELVIEW);
   glClearColor(0.0f,0.0f,0.0f,1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -142,6 +170,8 @@ void keyboard(GLFWwindow* window,int key,int scancode,int action,int mods) {
     transitionToMapView();
   if(key == GLFW_KEY_G && action == GLFW_PRESS)
     programData->getCurrentVoxel()->bake();
+  if(key == GLFW_KEY_W && action == GLFW_PRESS)
+    programData->setWireframe(!programData->getWireframe());
 }
 
 void mouseMove(GLFWwindow* window,double x,double y) {
@@ -177,7 +207,8 @@ void transitionToObjectView() {
 }
 
 void transitionToVoxelView() {
-  // to be implemented
+  programData->falsifyViews();
+  programData->setVoxelView(true);
 }
 
 void transitionToCustomView() {
@@ -189,5 +220,6 @@ void transitionToVoxelizedView() {
 }
 
 void transitionToMapView() {
-  // to be implemented
+  programData->falsifyViews();
+  programData->setMapView(true);
 }
