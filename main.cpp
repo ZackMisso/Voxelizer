@@ -1,5 +1,8 @@
 #include "programData.h"
 #include "control.h"
+#include "modeler.h"
+
+#define GLFW_INCLUDE_GLU
 #include <GLFW/glfw3.h>
 
 ProgramData* programData;
@@ -86,27 +89,23 @@ void displayObjectView() {
 }
 
 void displayVoxelView() {
-  //glMatrixMode(GL_PROJECTION);
-  //glLoadIdentity();
-  //gluPerspective(65.0,(float)programData->getWinH()/programData->getWinW(),.1,100);
-  //glFrustum(-2.0,2.0,-2.0,2.0,-20.0,20.0);
-  //glMatrixMode(GL_MODELVIEW);
   glClearColor(0.0f,0.0f,0.0f,1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   //glOrtho(-1.0f,1.0f,-2.0f,2.0f,2.0f,-2.0f);
-  //gluPerspective(65.0,(float)programData->getWinH()/programData->getWinW(),.1,100);
-  glFrustum(-2.0,2.0,-2.0,2.0,-1.0,20.0);
+  gluPerspective(35.0,(float)programData->getWinH()/programData->getWinW(),.1,10);
+  //glFrustum(-2.0,2.0,-2.0,2.0,0.01,2.0);
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
-  // to be implemented
+  gluLookAt(0.0,0.0,-6.0,0.0,0.0,0.0,0.0,1.0,0.0);
   // test by drawing a cube
   glRotatef(dt,0.0,1.0,0.0);
   glRotatef(30,1.0,0.0,0.0);
   glScalef(0.4f,0.4f,0.4f);
   glTranslatef(0.0f,-0.1f,0.0f);
-  programData->getCurrentVoxel()->drawNormalCube(programData->getWireframe());
+  //programData->getCurrentVoxel()->drawCube(Vec3(0.0,0.0,0.0),1.0f);
+  Modeler::drawCube(SOLID,Vec3(0.0,0.0,0.0),1.0f);
 }
 
 void displayCustomView() {
@@ -118,11 +117,13 @@ void displayVoxelizedView() {
 }
 
 void displayMapView() {
+  glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
   glMatrixMode(GL_MODELVIEW);
   glClearColor(0.0f,0.0f,0.0f,1.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+  glLoadIdentity();
+  
   glLineWidth(.5);
   glBegin(GL_LINES);
   glColor4f(0.7f,0.7f,0.7f,0.5f);
@@ -171,7 +172,11 @@ void keyboard(GLFWwindow* window,int key,int scancode,int action,int mods) {
   if(key == GLFW_KEY_G && action == GLFW_PRESS)
     programData->getCurrentVoxel()->bake();
   if(key == GLFW_KEY_W && action == GLFW_PRESS)
-    programData->setWireframe(!programData->getWireframe());
+    programData->setRenderMode(WIREFRAME);
+  if(key == GLFW_KEY_S && action == GLFW_PRESS)
+    programData->setRenderMode(SOLID);
+  if(key == GLFW_KEY_W && action == GLFW_PRESS)
+    programData->setRenderMode(SHADED);
 }
 
 void mouseMove(GLFWwindow* window,double x,double y) {

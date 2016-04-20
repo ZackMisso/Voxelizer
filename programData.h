@@ -20,11 +20,12 @@ private:
   bool customView;
   bool voxelizedView;
   bool mapView;
-  bool wireframe;
+  RenderMode renderMode;
 public:
   ProgramData();
   ~ProgramData();
   void falsifyViews();
+  void falsifyRender();
   // getter methods
   Voxel* getCurrentVoxel();
   TriMesh* getCurrentTriMesh();
@@ -37,7 +38,7 @@ public:
   bool getCustomView();
   bool getVoxelizedView();
   bool getMapView();
-  bool getWireframe();
+  RenderMode getRenderMode();
   // setter methods
   void setCurrentVoxel(Voxel* param);
   void setCurrentTriMesh(TriMesh* param);
@@ -50,7 +51,7 @@ public:
   void setCustomView(bool param);
   void setVoxelizedView(bool param);
   void setMapView(bool param);
-  void setWireframe(bool param);
+  void setRenderMode(RenderMode param);
 };
 
 #endif

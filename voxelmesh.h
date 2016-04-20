@@ -12,7 +12,6 @@ private:
   bool mesh[VOXDIM][VOXDIM][VOXDIM];
   float voxelDimension;
   void resetMesh();
-	void drawCube(Vec3 pos,float dim);
 public:
   VoxelMesh();
   ~VoxelMesh();
