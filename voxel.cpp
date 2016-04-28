@@ -18,7 +18,6 @@ void Voxel::flipMapVal(int y,int x) {
 }
 
 void Voxel::drawMap() {
-  //cout << "Drawing Voxel" << endl;
   glColor3f(1.0,0.0,0.0);
   glBegin(GL_QUADS);
   float d = 2.0f / ((float)MAPDIM);
